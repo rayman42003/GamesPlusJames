@@ -13,9 +13,17 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if(Input.GetKeyDown(KeyCode.Space))
+	    if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, jumpHeight);
+        }
+	    if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed, 0);
+        }
+	    if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(-moveSpeed, 0);
         }
 	}
 }
