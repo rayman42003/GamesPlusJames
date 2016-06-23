@@ -6,6 +6,17 @@ public class PlayerController : MonoBehaviour {
     public float moveSpeed;
     public float jumpHeight;
 
+    public Vector2 RigidBody {
+        get
+        {
+            return GetComponent<Rigidbody2D>().velocity;
+        }
+        set
+        {
+            GetComponent<Rigidbody2D>().velocity = value;
+        }
+    }
+
 	// Use this for initialization
 	void Start () {
 	
@@ -15,15 +26,15 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
 	    if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(0, jumpHeight);
+            RigidBody = new Vector2(RigidBody.x, jumpHeight);
         }
 	    if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed, 0);
+            RigidBody = new Vector2(moveSpeed, RigidBody.y);
         }
 	    if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(-moveSpeed, 0);
+            RigidBody = new Vector2(-moveSpeed, RigidBody.y);
         }
 	}
 }
