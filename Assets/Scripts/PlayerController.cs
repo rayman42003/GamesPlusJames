@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour {
     public LayerMask groundMask;
     private bool grounded;
 
+    private bool doubleJumped;
+
     private Vector2 RigidBody {
         get
         {
@@ -30,16 +32,20 @@ public class PlayerController : MonoBehaviour {
     void FixedUpdate()
     {
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundMask);
+        if (grounded)
+            doubleJumped = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
 	    if( (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-            && grounded)
+            && !doubleJumped)
         {
-            RigidBody = new Vector2(RigidBody.x, jumpHeight);
+            Jump();
+            if (!grounded)
+                doubleJumped = true;
         }
-	    if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             RigidBody = new Vector2(moveSpeed, RigidBody.y);
         }
@@ -48,4 +54,9 @@ public class PlayerController : MonoBehaviour {
             RigidBody = new Vector2(-moveSpeed, RigidBody.y);
         }
 	}
+
+    private void Jump()
+    {
+        RigidBody = new Vector2(RigidBody.x, jumpHeight);
+    }
 }
