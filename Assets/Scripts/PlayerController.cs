@@ -6,7 +6,12 @@ public class PlayerController : MonoBehaviour {
     public float moveSpeed;
     public float jumpHeight;
 
-    public Vector2 RigidBody {
+    public Transform groundCheck;
+    public float groundCheckRadius;
+    public LayerMask groundMask;
+    private bool grounded;
+
+    private Vector2 RigidBody {
         get
         {
             return GetComponent<Rigidbody2D>().velocity;
@@ -21,6 +26,11 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
 	
 	}
+
+    void FixedUpdate()
+    {
+        grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundMask);
+    }
 	
 	// Update is called once per frame
 	void Update () {
