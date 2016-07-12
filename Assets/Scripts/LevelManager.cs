@@ -2,10 +2,13 @@
 using System.Collections;
 
 public class LevelManager : MonoBehaviour {
+    public GameObject currentCheckpoint;
+
+    private PlayerController player;
 
 	// Use this for initialization
 	void Start () {
-	
+        player = FindObjectOfType<PlayerController>();
 	}
 	
 	// Update is called once per frame
@@ -16,5 +19,6 @@ public class LevelManager : MonoBehaviour {
     public void RespawnPlayer()
     {
         Debug.Log("Player respawned");
+        player.transform.position = currentCheckpoint.transform.position;
     }
 }
