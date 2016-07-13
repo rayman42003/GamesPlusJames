@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour {
 
     private bool doubleJumped;
 
+    private Animator animator;
+
     private Vector2 RigidBody {
         get
         {
@@ -26,7 +28,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        animator = GetComponent<Animator>();
 	}
 
     void FixedUpdate()
@@ -53,6 +55,14 @@ public class PlayerController : MonoBehaviour {
         {
             RigidBody = new Vector2(-moveSpeed, RigidBody.y);
         }
+
+        animator.SetFloat("Speed", Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x));
+        animator.SetBool("Grounded", grounded);
+
+        if (GetComponent<Rigidbody2D>().velocity.x > 0)
+            transform.localScale = new Vector3(1f, 1f, 1f);
+        else if (GetComponent<Rigidbody2D>().velocity.x < 0)
+            transform.localScale = new Vector3(-1f, 1f, 1f);
 	}
 
     private void Jump()
