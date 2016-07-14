@@ -9,6 +9,8 @@ public class LevelManager : MonoBehaviour {
     public GameObject deathParticle;
     public GameObject spawnParticle;
 
+    public float respawnTime= 1f;
+
 	// Use this for initialization
 	void Start () {
         player = FindObjectOfType<PlayerController>();
@@ -19,11 +21,20 @@ public class LevelManager : MonoBehaviour {
 	
 	}
 
-    public void RespawnPlayer()
+    public void KillPlayer()
     {
-        Debug.Log("Player respawned");
         Instantiate(deathParticle, player.transform.position, player.transform.rotation);
+        player.enabled = false;
+        player.GetComponent<Renderer>().enabled = false;
+        StartCoroutine("DelayRespawn");       
+    }
+
+    private IEnumerator DelayRespawn()
+    {
+        yield return new WaitForSeconds(respawnTime);
         player.transform.position = currentCheckpoint.transform.position;
+        player.enabled = true;
+        player.GetComponent<Renderer>().enabled = true;
         Instantiate(spawnParticle, player.transform.position, player.transform.rotation);
     }
 }

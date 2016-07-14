@@ -18,7 +18,7 @@ public class KillPlayer : MonoBehaviour {
     {
         if (obj.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            levelManager.RespawnPlayer();
+            levelManager.KillPlayer();
         }
     }
 }
