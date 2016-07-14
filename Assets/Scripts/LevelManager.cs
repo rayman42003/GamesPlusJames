@@ -6,6 +6,9 @@ public class LevelManager : MonoBehaviour {
 
     private PlayerController player;
 
+    public GameObject deathParticle;
+    public GameObject spawnParticle;
+
 	// Use this for initialization
 	void Start () {
         player = FindObjectOfType<PlayerController>();
@@ -19,6 +22,8 @@ public class LevelManager : MonoBehaviour {
     public void RespawnPlayer()
     {
         Debug.Log("Player respawned");
+        Instantiate(deathParticle, player.transform.position, player.transform.rotation);
         player.transform.position = currentCheckpoint.transform.position;
+        Instantiate(spawnParticle, player.transform.position, player.transform.rotation);
     }
 }
