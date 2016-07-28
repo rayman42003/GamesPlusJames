@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
     public float moveSpeed;
     private float moveVelocity;
     public float jumpHeight;
+    public float gravityScale = 5f;
 
     public Transform groundCheck;
     public float groundCheckRadius;
@@ -16,7 +17,7 @@ public class PlayerController : MonoBehaviour {
 
     private Animator animator;
 
-    private Vector2 RigidBody {
+    private Vector2 Velocity {
         get
         {
             return GetComponent<Rigidbody2D>().velocity;
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         animator = GetComponent<Animator>();
+        GetComponent<Rigidbody2D>().gravityScale = gravityScale;
 	}
 
     void FixedUpdate()
@@ -59,19 +61,19 @@ public class PlayerController : MonoBehaviour {
             moveVelocity = -moveSpeed;
         }
 
-        RigidBody = new Vector2(moveVelocity, RigidBody.y);
+        Velocity = new Vector2(moveVelocity, Velocity.y);
 
-        animator.SetFloat("Speed", Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x));
+        animator.SetFloat("Speed", Mathf.Abs(Velocity.x));
         animator.SetBool("Grounded", grounded);
 
-        if (GetComponent<Rigidbody2D>().velocity.x > 0)
+        if (Velocity.x > 0)
             transform.localScale = new Vector3(1f, 1f, 1f);
-        else if (GetComponent<Rigidbody2D>().velocity.x < 0)
+        else if (Velocity.x < 0)
             transform.localScale = new Vector3(-1f, 1f, 1f);
 	}
 
     private void Jump()
     {
-        RigidBody = new Vector2(RigidBody.x, jumpHeight);
+        Velocity = new Vector2(Velocity.x, jumpHeight);
     }
 }

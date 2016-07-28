@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour {
         ScoreManager.AddPoints(-deathPenalty);
         player.enabled = false;
         player.GetComponent<Renderer>().enabled = false;
-        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        player.GetComponent<Rigidbody2D>().isKinematic = true;
         StartCoroutine("DelayRespawn");       
     }
 
@@ -38,6 +38,7 @@ public class LevelManager : MonoBehaviour {
         yield return new WaitForSeconds(respawnTime);
         player.transform.position = currentCheckpoint.transform.position;
         player.enabled = true;
+        player.GetComponent<Rigidbody2D>().isKinematic = false;
         player.GetComponent<Renderer>().enabled = true;
         Instantiate(spawnParticle, player.transform.position, player.transform.rotation);
     }
