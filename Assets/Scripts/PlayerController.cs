@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
     public float moveSpeed;
+    private float moveVelocity;
     public float jumpHeight;
 
     public Transform groundCheck;
@@ -47,14 +48,18 @@ public class PlayerController : MonoBehaviour {
             if (!grounded)
                 doubleJumped = true;
         }
+
+        moveVelocity = 0f;
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            RigidBody = new Vector2(moveSpeed, RigidBody.y);
+            moveVelocity = moveSpeed;
         }
 	    if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            RigidBody = new Vector2(-moveSpeed, RigidBody.y);
+            moveVelocity = -moveSpeed;
         }
+
+        RigidBody = new Vector2(moveVelocity, RigidBody.y);
 
         animator.SetFloat("Speed", Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x));
         animator.SetBool("Grounded", grounded);

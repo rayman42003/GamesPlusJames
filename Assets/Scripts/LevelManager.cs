@@ -26,6 +26,7 @@ public class LevelManager : MonoBehaviour {
         Instantiate(deathParticle, player.transform.position, player.transform.rotation);
         player.enabled = false;
         player.GetComponent<Renderer>().enabled = false;
+        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         StartCoroutine("DelayRespawn");       
     }
 
