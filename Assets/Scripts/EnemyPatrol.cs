@@ -6,10 +6,9 @@ public class EnemyPatrol : MonoBehaviour {
     public float moveSpeed;
     public bool movingRight;
 
-    public Transform wallCheck;
-    public float wallCheckRadius;
-    public LayerMask wallMask;
-    private bool hittingWall;
+    public ObjectCheck wallCheck;
+
+    public ObjectCheck edgeCheck;
 
     private Vector2 Velocity {
         get
@@ -29,8 +28,7 @@ public class EnemyPatrol : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        hittingWall = Physics2D.OverlapCircle(wallCheck.position, wallCheckRadius, wallMask);
-        if (hittingWall)
+        if (wallCheck.ObjectFound || !edgeCheck.ObjectFound)
             movingRight = !movingRight;
 
         if (movingRight)

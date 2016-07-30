@@ -8,10 +8,7 @@ public class PlayerController : MonoBehaviour {
     public float jumpHeight;
     public float gravityScale = 5f;
 
-    public Transform groundCheck;
-    public float groundCheckRadius;
-    public LayerMask groundMask;
-    private bool grounded;
+    public ObjectCheck groundCheck;
 
     private bool doubleJumped;
 
@@ -33,21 +30,17 @@ public class PlayerController : MonoBehaviour {
         animator = GetComponent<Animator>();
         GetComponent<Rigidbody2D>().gravityScale = gravityScale;
 	}
-
-    void FixedUpdate()
-    {
-        grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundMask);
-        if (grounded)
-            doubleJumped = false;
-    }
 	
 	// Update is called once per frame
 	void Update () {
-	    if( (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        if (groundCheck.ObjectFound)
+            doubleJumped = false;
+
+        if ( (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             && !doubleJumped)
         {
             Jump();
-            if (!grounded)
+            if (!groundCheck.ObjectFound)
                 doubleJumped = true;
         }
 
@@ -64,7 +57,7 @@ public class PlayerController : MonoBehaviour {
         Velocity = new Vector2(moveVelocity, Velocity.y);
 
         animator.SetFloat("Speed", Mathf.Abs(Velocity.x));
-        animator.SetBool("Grounded", grounded);
+        animator.SetBool("Grounded", groundCheck.ObjectFound);
 
         if (Velocity.x > 0)
             transform.localScale = new Vector3(1f, 1f, 1f);
