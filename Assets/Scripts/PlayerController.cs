@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour {
 
     private Animator animator;
 
+    public Transform firingLocation;
+    public GameObject projectile;
+
     private Vector2 Velocity {
         get
         {
@@ -63,6 +66,11 @@ public class PlayerController : MonoBehaviour {
             transform.localScale = new Vector3(1f, 1f, 1f);
         else if (Velocity.x < 0)
             transform.localScale = new Vector3(-1f, 1f, 1f);
+
+        if(Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        {
+            Instantiate(projectile, firingLocation.position, firingLocation.rotation);
+        }
 	}
 
     private void Jump()
