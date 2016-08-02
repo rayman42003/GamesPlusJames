@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Checkpoint : MonoBehaviour {
-
+public class Killer: MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	}
@@ -14,9 +13,10 @@ public class Checkpoint : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D obj)
     {
-        if(obj.gameObject.layer == LayerMask.NameToLayer("Player"))
+        Killable killable = obj.gameObject.GetComponentInChildren<Killable>();
+        if (killable != null)
         {
-            LevelManager.Instance().currentCheckpoint = this.gameObject;
+            killable.Kill(obj.gameObject);
         }
     }
 }

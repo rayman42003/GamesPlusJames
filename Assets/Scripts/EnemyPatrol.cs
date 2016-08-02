@@ -6,9 +6,9 @@ public class EnemyPatrol : MonoBehaviour {
     public float moveSpeed;
     public bool movingRight;
 
-    public ObjectCheck wallCheck;
+    public ObjectChecker wallCheck;
 
-    public ObjectCheck edgeCheck;
+    public ObjectChecker edgeCheck;
 
     private Vector2 Velocity {
         get

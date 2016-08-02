@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
     public float jumpHeight;
     public float gravityScale = 5f;
 
-    public ObjectCheck groundCheck;
+    public ObjectChecker groundCheck;
 
     private bool doubleJumped;
 

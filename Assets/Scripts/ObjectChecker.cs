@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ObjectCheck : MonoBehaviour {
+public class ObjectChecker : MonoBehaviour {
     public float checkRadius;
     public LayerMask mask;
     public bool ObjectFound
