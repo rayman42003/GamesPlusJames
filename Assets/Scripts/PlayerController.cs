@@ -69,7 +69,12 @@ public class PlayerController : MonoBehaviour {
 
         if(Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
         {
-            Instantiate(projectile, firingLocation.position, firingLocation.rotation);
+            GameObject obj = Instantiate(projectile, firingLocation.position, 
+                firingLocation.rotation) as GameObject;
+
+            Projectile p = obj.GetComponent<Projectile>();
+            if (transform.localScale.x < 0)
+                p.moveSpeed = -p.moveSpeed;
         }
 	}
 
