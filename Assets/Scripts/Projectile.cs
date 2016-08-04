@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour {
 
     public GameObject impactEffect;
 
+    public float rotationSpeed = -720f;
     private Vector2 Velocity
     {
         get
@@ -21,7 +22,8 @@ public class Projectile : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        StartCoroutine("DelayDeath");
+        StartCoroutine(DelayDeath());
+        GetComponent<Rigidbody2D>().angularVelocity = rotationSpeed;
     }
 
     // Update is called once per frame

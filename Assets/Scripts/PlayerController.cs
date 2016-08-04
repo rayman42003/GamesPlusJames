@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 
     public float moveSpeed;
     private float moveVelocity;
@@ -16,8 +17,11 @@ public class PlayerController : MonoBehaviour {
 
     public Transform firingLocation;
     public GameObject projectile;
+    public float firingDelay = 0.12f;
+    public bool canFire;
 
-    private Vector2 Velocity {
+    private Vector2 Velocity
+    {
         get
         {
             return GetComponent<Rigidbody2D>().velocity;
@@ -28,18 +32,21 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         animator = GetComponent<Animator>();
         GetComponent<Rigidbody2D>().gravityScale = gravityScale;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        canFire = true;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if (groundCheck.ObjectFound)
             doubleJumped = false;
 
-        if ( (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             && !doubleJumped)
         {
             Jump();
@@ -52,7 +59,7 @@ public class PlayerController : MonoBehaviour {
         {
             moveVelocity = moveSpeed;
         }
-	    if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             moveVelocity = -moveSpeed;
         }
@@ -67,19 +74,30 @@ public class PlayerController : MonoBehaviour {
         else if (Velocity.x < 0)
             transform.localScale = new Vector3(-1f, 1f, 1f);
 
-        if(Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && canFire)
         {
-            GameObject obj = Instantiate(projectile, firingLocation.position, 
-                firingLocation.rotation) as GameObject;
+            GameObject obj = Instantiate(projectile, firingLocation.position,
+                        firingLocation.rotation) as GameObject;
 
             Projectile p = obj.GetComponent<Projectile>();
             if (transform.localScale.x < 0)
+            {
                 p.moveSpeed = -p.moveSpeed;
+                p.GetComponent<Rigidbody2D>().angularVelocity *= -1;
+            }
+            canFire = false;
+            StartCoroutine(FiringCooldown(firingDelay));
         }
-	}
+    }
 
     private void Jump()
     {
         Velocity = new Vector2(Velocity.x, jumpHeight);
+    }
+
+    private IEnumerator FiringCooldown(float cooldown)
+    {
+        yield return new WaitForSeconds(cooldown);
+        canFire = true;
     }
 }
