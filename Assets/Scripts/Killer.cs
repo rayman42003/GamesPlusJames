@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Killer: MonoBehaviour {
+public class Killer: Attacker {
 
-    void OnTriggerEnter2D(Collider2D obj)
+    public override void Attack(GameObject obj)
     {
-        Killable killable = obj.gameObject.GetComponentInChildren<Killable>();
-        if (killable != null)
+        Attackable attackable = obj.gameObject.GetComponentInChildren<Attackable>();
+        if (attackable != null)
         {
-            killable.Kill(obj.gameObject);
+            attackable.Instakill(gameObject);
         }
     }
 }

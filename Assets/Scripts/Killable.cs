@@ -5,7 +5,7 @@ public class Killable : MonoBehaviour
 {
     // Returns true if the object is killed.
     // Means that the object was destroyed and reference is null.
-    public virtual bool Kill(GameObject obj)
+    public virtual bool Kill(GameObject attacker)
     {
         Destroy(gameObject);
         return true;
