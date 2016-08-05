@@ -2,7 +2,9 @@
 using System.Collections;
 
 public class DestroyParticles : MonoBehaviour {
+    
     private ParticleSystem particles;
+
 	// Use this for initialization
 	void Start () {
         particles = GetComponent<ParticleSystem>();
